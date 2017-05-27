@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from django.http import HttpResponse
+from django.views.generic import ListView
+from models import SourceUrl
 
-from django.shortcuts import render
-
-# Create your views here.
+class RSSList(ListView):
+    model = SourceUrl
