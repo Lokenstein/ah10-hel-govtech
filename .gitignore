@@ -58,3 +58,4 @@ target/
 
 *.sqlite3
 env/
+venv/
