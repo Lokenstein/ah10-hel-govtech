@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+
+            <img src="http://static.snopes.com/app/uploads/2015/01/picnic_tw.jpg" alt="img" />
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <form class="col s12" action="" method="post">{% csrf_token %}
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text">
+                    <label for="disabled">Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text">
+                    <label for="disabled">Description</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text">
+                    <label for="disabled">Date</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text">
+                    <label for="disabled">Category</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text">
+                    <label for="disabled">Location</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+
+                    {% comment %}{{ form.as_p }}{% endcomment %}
+                    <input type="submit" value="Create new event" />
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

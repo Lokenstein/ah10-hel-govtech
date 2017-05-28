@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+
 from django.contrib.auth.views import login, logout
+from ah10_govtech.views import HomeView
+from ah10_govtech.views import CreateEventView
+from ah10_govtech.views import EventDetailView
+from ah10_govtech.views import QuestionListView
+
+
 admin.autodiscover()
 
 urlpatterns = [
@@ -23,5 +30,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', logout, {'template_name': 'logout.html'}, name='logout'),
+     url(r'^$', HomeView.as_view(), name='home'),# eventlist
+    url(r'^create-event/$', CreateEventView.as_view(), name='create-event'),
+    url(r'^event-detail/$', EventDetailView.as_view(), name='event-detail'),
+    url(r'^question-list/$', QuestionListView.as_view(), name='event-detail'),
+
      
 ]
