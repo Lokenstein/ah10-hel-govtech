@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
 
-    <div class="col s3">"{}"</div>
+    <div class="col s3"><h4>People and Culture</h4></div>
     <div class="col s6">
         <a class="btn ">What is this button{% url "home" %}</a>
         <a class="btn disabled">{% url "home" %}</a>
@@ -24,60 +24,27 @@
     </div>
 </div>
 
-
+{% for event in events %}
 <div class="row">
     <div class="col s6 m6">
         <div class="card">
             <div class="card-image">
                 <img src="http://content.active.com/Assets/Active.com+Content+Site+Digital+Assets/Kids/Articles/Soccer+Tips/carousel.jpg">
-                <span class="card-title">Card Title</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"></a>
+                <span style="color:black" class="card-title"><strong>{{event.name}}</strong></span>
+                <a class="btn-floating halfway-fab waves-effect waves-light red" href="{% url 'event-detail' pk=event.pk %}">View</a>
             </div>
             <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require
-                    little markup to use effectively.</p>
+                <p>
+                     {{event.name}} ({{event.description}}) @({{event.event_location}} at {{event.event_date}}
+                </p>
             </div>
         </div>
     </div>
     <div class="col s6 m6">
         <div class="card">
-            <div class="card-image">
-                <img src="http://content.active.com/Assets/Active.com+Content+Site+Digital+Assets/Kids/Articles/Soccer+Tips/carousel.jpg">
-                <span class="card-title">Card Title</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"></a>
-            </div>
-            <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require
-                    little markup to use effectively.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col s6 m6">
-        <div class="card">
-            <div class="card-image">
-                <img src="http://content.active.com/Assets/Active.com+Content+Site+Digital+Assets/Kids/Articles/Soccer+Tips/carousel.jpg">
-                <span class="card-title">Card Title</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"></a>
-            </div>
-            <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require
-                    little markup to use effectively.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col s6 m6">
-        <div class="card">
-            <div class="card-image">
-                <img src="http://content.active.com/Assets/Active.com+Content+Site+Digital+Assets/Kids/Articles/Soccer+Tips/carousel.jpg">
-                <span class="card-title">Card Title</span>
-                <a class="btn-floating halfway-fab waves-effect waves-light red"></a>
-            </div>
             <div class="card-content">
                 <div>
+
                     <div class="col s6 m6">
                         <a class="waves-effect waves-light btn">Create your event</a>
                     </div>
@@ -90,7 +57,7 @@
         </div>
     </div>
 </div>
-
+{% endfor %}
 
 <div class="row">
 

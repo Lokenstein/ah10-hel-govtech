@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY') #hidden in settings.ini file
 ALLOWED_HOSTS = []
 
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/main'
 LOGIN_URL = '/login'
 # Application definition
 

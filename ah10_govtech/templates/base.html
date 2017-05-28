@@ -6,7 +6,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'materialize/bin/materialize.css' %}"  media="screen,projection"/>
  
 
-    <title>app</title>
+    <title>People and Culture</title>
 </head>
 <body>
     {% block header %}
@@ -15,7 +15,7 @@
             <li><a href="{% url "home" %}">Home</a></li>
             {% if request.user.is_authenticated %}
             <li><a href="{% url "logout" %}">Logout</a></li>
-            <h1><u>Hello </u>{{request.user.username}}</h1>
+            <h1 style="color: black"><u>Hello </u>{{request.user.username}}</h1>
             {% else %}
             <li><a href="{% url "login" %}">Login</a></li>
             <li><a href="{% url "signup"%}">Register</a></li>
@@ -26,10 +26,12 @@
 
     {% block content %}
      <!--Import jQuery before materialize.js-->
-    {% block footer %}
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="{% static 'materialize/bin/materialize.js' %}"></script>
+
     
     {% endblock %}
+   {% block footer %}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="{% static 'materialize/bin/materialize.js' %}"></script>
+{% endblock  %}
 </body>
 </html>
