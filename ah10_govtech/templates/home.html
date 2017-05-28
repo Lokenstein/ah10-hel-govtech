@@ -3,11 +3,11 @@
 {% block content %}
 <div class="row">
 
-    <div class="col s3">{% %}</div>
+    <div class="col s3">"{}"</div>
     <div class="col s6">
-        <a class="btn disabled">{% %}</a>
-        <a class="btn disabled">{% %}</a>
-        <a class="btn disabled">{% %}</a>
+        <a class="btn disabled">{% url "home" %}</a>
+        <a class="btn disabled">{% url "home" %}</a>
+        <a class="btn disabled">{% url "home" %}</a>
 
     </div>
     <div class="col s3">
@@ -96,14 +96,14 @@
 
     <div class="col s4">
         <h4>Latest news</h4>
-        <div class="latest_news">{% %}</div>
+        <div class="latest_news">{% url "home" %}</div>
     </div>
     <div class="col s4">
         <h4>Friendship</h4>
     </div>
     <div class="col s4">
         <h4>Survival ideas</h4>
-        {% %}
+        {% url "home" %}
     </div>
 </div>
 {% endblock %}

@@ -17,12 +17,12 @@ from django.http import HttpResponseRedirect
 
 # models import
 from models import SourceUrl #?
+from .models import SourceUrl, Event
 
 class RSSList(ListView):
     model = SourceUrl
 
 
-<<<<<<< HEAD
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("login")
@@ -37,7 +37,8 @@ def login_view(request):
         return HttpResponseRedirect("index")
     else:
         return HttpResponseRedirect("login")
-=======
+
+
 class AddEvent(CreateView):
     form_class = UserCreationForm
     template_name = 'create_event.html'
@@ -45,13 +46,15 @@ class AddEvent(CreateView):
     def get_success_url(self):
         return reverse('home')
 
+
 class HomeView(TemplateView):
     template_name = 'home.html'
     def home():
         return
 
+
 class NewSubmissionView(CreateView):
-    model = Link
+    model = SourceUrl
     fields = (
         'title', 'url'
     )
@@ -74,7 +77,6 @@ class NewSubmissionView(CreateView):
         return reverse('home')
 
 
-
 class CreateEventView(CreateView):
     model = Event
     fields = ('name','description','event_date','location')
@@ -85,6 +87,5 @@ class CreateEventView(CreateView):
         new_event
 
 
-    
-
->>>>>>> 20184dca8315248f7bc18946e747c8d387a7b592
+class EventDetailView(DetailView):
+    model = Event
