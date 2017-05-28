@@ -5,7 +5,7 @@
 
     <div class="col s3">"{}"</div>
     <div class="col s6">
-        <a class="btn disabled">{% url "home" %}</a>
+        <a class="btn ">What is this button{% url "home" %}</a>
         <a class="btn disabled">{% url "home" %}</a>
         <a class="btn disabled">{% url "home" %}</a>
 
@@ -96,14 +96,29 @@
 
     <div class="col s4">
         <h4>Latest news</h4>
-        <div class="latest_news">{% url "home" %}</div>
+
+        <ul>
+        {% for entry in feeds %}
+            <li><a href="{{entry.link}}">{{entry.title}}</a></li>
+
+        {% endfor %}
+        </ul>
     </div>
     <div class="col s4">
         <h4>Friendship</h4>
+        {% for friendship in friendships %}
+             <tr class="{% cycle 'row1' 'row2' %}">
+        {{friendship.name}} ({{friendship.description}}) @({{friendship.location}})
+             </tr>
+        {% endfor %}
     </div>
     <div class="col s4">
         <h4>Survival ideas</h4>
-        {% url "home" %}
+        {% for event in events %}
+             <tr class="{% cycle 'row1' 'row2' %}">
+        {{event.name}} ({{event.description}}) @({{event.event_location}} at {{event.event_date}}
+        </tr>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

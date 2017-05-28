@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^rss-list/$', RSSList.as_view()),
     url(r'^$', HomeView.as_view(), name='home'),# eventlist
     url(r'^create-event/$', CreateEventView.as_view(), name='create-event'),
-    url(r'^event-detail/$', EventDetailView.as_view(), name='event-detail'),
+    url(r'^event/(?P<pk>\d+)$', EventDetailView.as_view(), name='event-detail'),
     #url(r'^question-list/$', QuestionListView.as_view(), name='event-detail'),
 ]
 

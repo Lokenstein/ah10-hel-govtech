@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
+import feedparser, random
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
@@ -17,7 +18,7 @@ from django.http import HttpResponseRedirect
 
 # models import
 from models import SourceUrl #?
-from .models import SourceUrl, Event
+from .models import SourceUrl, Event, LookingFor
 
 class RSSList(ListView):
     model = SourceUrl
@@ -49,8 +50,23 @@ class AddEvent(CreateView):
 
 class HomeView(TemplateView):
     template_name = 'home.html'
-    def home():
-        return
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['events'] = Event.objects.all()[:4]
+        context['friendships'] = LookingFor.objects.all()[:4]
+        context['feeds'] = self.get_feeds()
+        return context
+
+    def get_feeds(self):
+        feed_urls = SourceUrl.objects.all()[:2]
+        all_feeds = list()
+        for url in feed_urls:
+            single_feeds = feedparser.parse(url.url)
+            all_feeds.extend(single_feeds.entries[:2])
+        #for url in feed_urls:
+        #feeds = feedparser.parse("http://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss")
+        return random.sample(all_feeds, 3)
 
 
 class NewSubmissionView(CreateView):
