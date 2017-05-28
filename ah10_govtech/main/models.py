@@ -36,11 +36,11 @@ class Category(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=150)
     description = models.TextField(max_length=1000, blank=True)
-    event_date = models.DateTimeField()
+    event_date = models.DateTimeField(auto_now_add=True, editable=False)
     event_category = models.ForeignKey(Category, on_delete=models.SET("Category_deleted"))
-    event_location_longitude = models.DecimalField(max_digits=9, decimal_places=5)
-    event_location_latitude = models.DecimalField(max_digits=9, decimal_places=5)
-
+    # event_location_longitude = models.DecimalField(max_digits=9, decimal_places=5)
+    # event_location_latitude = models.DecimalField(max_digits=9, decimal_places=5)
+    event_location = models.TextField(max_length=1000)
     def __unicode__(self):
         return self.name
 

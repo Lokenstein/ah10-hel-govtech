@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from ah10_govtech.views import HomeView
+from ah10_govtech.views import CreateEventView
+from ah10_govtech.views import EventDetailView
+from ah10_govtech.views import QuestionListView
 admin.autodiscover()
 
 urlpatterns = [
     url(r'^main/', include('main.urls')),
     url(r'^admin/', admin.site.urls),
+     url(r'^$', HomeView.as_view(), name='home'),# eventlist
+    url(r'^create-event/$', CreateEventView.as_view(), name='create-event'),
+    url(r'^event-detail/$', EventDetailView.as_view(), name='event-detail'),
+    url(r'^question-list/$', QuestionListView.as_view(), name='event-detail'),
      
 ]

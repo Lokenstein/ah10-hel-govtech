@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col s12">
@@ -9,7 +11,7 @@
 
 
     <div class="row">
-        <form class="col s12">
+        <form class="col s12" action="" method="post">{% csrf_token %}
 
             <div class="row">
                 <div class="input-field col s12">
@@ -43,7 +45,9 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <a class="waves-effect waves-light btn">Create event</a>
+
+                    {% comment %}{{ form.as_p }}{% endcomment %}
+                    <input type="submit" value="Create new event" />
                 </div>
             </div>
 
@@ -53,3 +57,4 @@
     </div>
 
 </div>
+{% endblock %}
