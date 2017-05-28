@@ -28,6 +28,7 @@ SECRET_KEY = config('SECRET_KEY') #hidden in settings.ini file
 ALLOWED_HOSTS = []
 
 
+LOGIN_REDIRECT_URL = '/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'ah10_govtech.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [Path(Path(__file__).ancestor(2), "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

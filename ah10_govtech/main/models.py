@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -23,6 +25,17 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()
 
 
 class Category(models.Model):
@@ -48,6 +61,7 @@ class Event(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, blank=True)
+    #what is the location to be like? name or coordinate?
 
     def __unicode__(self):
         return self.name
