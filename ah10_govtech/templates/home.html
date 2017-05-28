@@ -108,7 +108,7 @@
         <h4>Friendship</h4>
         {% for friendship in friendships %}
              <tr class="{% cycle 'row1' 'row2' %}">
-        {{friendship.name}} ({{friendship.description}}) @({{friendship.location}})
+                 <strong>{{friendship.name}}</strong> ({{friendship.description}}) @({{friendship.location}})
              </tr>
         {% endfor %}
     </div>

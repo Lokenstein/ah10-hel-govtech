@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from django.http import HttpResponse
 import feedparser, random
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -12,16 +11,13 @@ from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from django.views.generic import ListView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# models import
-from models import SourceUrl #?
-from .models import SourceUrl, Event, LookingFor
-
-class RSSList(ListView):
-    model = SourceUrl
+from .forms import SignUpForm
+from .models import SourceUrl, Event, LookingFor, Location
 
 
 def logout_view(request):
@@ -40,6 +36,24 @@ def login_view(request):
         return HttpResponseRedirect("login")
 
 
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        user = form.save()
+        user.refresh_from_db()  # load the profile instance created by the signal
+        location = Location(name=form.cleaned_data.get('location'))
+        location.save()
+        user.userprofile.location = location
+        user.save()
+        raw_password = form.cleaned_data.get('password1')
+        user = authenticate(username=user.username, password=raw_password)
+        login(request, user)
+        return redirect('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signuppage.html', {'form': form})
+
+
 class AddEvent(CreateView):
     form_class = UserCreationForm
     template_name = 'create_event.html'
@@ -48,25 +62,23 @@ class AddEvent(CreateView):
         return reverse('home')
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['events'] = Event.objects.all()[:4]
-        context['friendships'] = LookingFor.objects.all()[:4]
+        context['events'] = Event.objects.filter(event_location=self.request.user.userprofile.location)[:4]
+        context['friendships'] = LookingFor.objects.filter(location=self.request.user.userprofile.location)[:3]
         context['feeds'] = self.get_feeds()
         return context
 
     def get_feeds(self):
-        feed_urls = SourceUrl.objects.all()[:2]
+        feed_urls = SourceUrl.objects.filter(location=self.request.user.userprofile.location)[:3]
         all_feeds = list()
         for url in feed_urls:
             single_feeds = feedparser.parse(url.url)
             all_feeds.extend(single_feeds.entries[:2])
-        #for url in feed_urls:
-        #feeds = feedparser.parse("http://feeds.yle.fi/uutiset/v1/majorHeadlines/YLE_UUTISET.rss")
-        return random.sample(all_feeds, 3)
+        return random.sample(all_feeds, len(all_feeds))[:3]
 
 
 class NewSubmissionView(CreateView):
